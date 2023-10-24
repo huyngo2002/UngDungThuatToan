@@ -1,0 +1,9 @@
+Cho danh sách n công việc c, thông tin về công việc gồm mã công việc, thời gian bắt đầu, thời gian kết thúc.
+Viết một chương trình thực hiện (chương trình được viết bằng ngôn ngữ C/C++).
+Câu 1: 4 điểm
+- Tạo danh sách c gồm từ 6 đến 10 công việc (không nhập từ bàn phím, 6 <= n <= 10).
+- Tính tổng thời gian thực hiện tất cả các công việc trong danh sách c bằng phương pháp đệ quy.
+Câu 2: 6 điểm
+- Cho biết một người thực hiện được nhiều nhất bao nhiêu công việc trong danh sách c, gồm những công việc nào (
+mã cv, t/g bắt đầu, t/g kết thúc).
+- Hiển thị tất cả các phương án lấy ra 5 công việc từ danh sách c (chỉ cần hiển thị mã công việc).

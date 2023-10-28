@@ -1,0 +1,9 @@
+Cho danh sách n máy tính m, thông tin về máy tính gồm nhãn hiệu, giá nhập, giá bán.
+Câu 1:
+- Tạo danh sách m gồm từ 6 đến 10 máy tính (không nhập từ bàn phím, 6 <= n <= 10)
+- Hiển thị danh sách máy tính ra màn hình bằng phương pháp đệ quy (hiển thị nhãn hiệu, giá nhập, giá bán)
+Câu 2:
+- Khởi tạo một số thực dương q, cho biết cần bán ít nhất bao nhiêu máy tính, gồm những máy tính nào 
+(hiển thị nhãn hiệu, tiền lãi) trong danh sách m để được số tiền lãi đúng bằng q.
+- Hiển thị tất cả các phương án khác nhau để xếp n máy tính trong danh sách m vào n vị trí được đánh số thứ tự
+từ 1 đến n trên một dãy bằng phương pháp sinh (mỗi phương án hiển thị nhãn hiệu máy tính và vị trí trên bàn).

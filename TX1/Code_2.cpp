@@ -27,9 +27,6 @@ class Computer {
 		int getInterest() const {
 			return this->sellingPrice - this->importPrice;
 		}
-		bool operator<(const Computer &other) {
-			return this->getInterest() > other.getInterest();
-		}
 };
 void print(Computer* computers, int n) {
 	if (n == 1) {
@@ -92,6 +89,48 @@ std::vector<Computer> greedy(Computer* computers, int n, int q) {
 	if (q > 0) ans.clear();
 	return ans;
 }
+void quick_sort(Computer* a, int left, int right, std::string type) {
+	if (type == "brandName") {
+		if (left < right) {
+			int k = (left + right) / 2;
+			std::string t = a[k].getBrandName();
+			int i = left, j = right;
+			do {
+				while (a[i].getBrandName() < t) i = i + 1;
+				while (a[j].getBrandName() > t) j = j - 1;
+				if (i <= j) {
+					Computer tg = a[i];
+					a[i] = a[j];
+					a[j] = tg;
+					i = i + 1;
+					j = j - 1;
+				}
+			} while (i <= j);
+			quick_sort(a, left, j, type);
+			quick_sort(a, i, right, type);
+		}
+	}
+	if (type == "Interest") {
+		if (left < right) {
+			int k = (left + right) / 2;
+			double t = a[k].getInterest();
+			int i = left, j = right;
+			do {
+				while (a[i].getInterest() > t) i = i + 1;
+				while (a[j].getInterest() < t) j = j - 1;
+				if (i <= j) {
+					Computer tg = a[i];
+					a[i] = a[j];
+					a[j] = tg;
+					i = i + 1;
+					j = j - 1;
+				}
+			} while (i <= j);
+			quick_sort(a, left, j, type);
+			quick_sort(a, i, right, type);
+		}
+	}
+}
 int main() {
 	// Cau 1.1
 	int n = 7;
@@ -107,7 +146,7 @@ int main() {
 	std::cout << "Danh sach cac may tinh:\n";
 	print(computers, n);
 	std::cout << "--------------------------------------------------------------\n";
-	std::sort(computers, computers + n);
+	quick_sort(computers, 0, n - 1, "Interest");
 	print(computers, n);
 	std::cout << "--------------------------------------------------------------\n";
 	// Cau 2.1
@@ -124,10 +163,7 @@ int main() {
 	}
 	std::cout << "--------------------------------------------------------------\n";
 	// Cau 2.2
-	std::sort(computers, computers + n,
-	[](const Computer &a, const Computer &b) {
-		return a.getBrandName() < b.getBrandName();
-	});
+	quick_sort(computers, 0, n - 1, "brandName");
 	listing_configs(computers, n);
 	return 0;
 }

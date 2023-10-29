@@ -4,12 +4,12 @@
 #include <map>
 class Job {
 	private:
-		std::string code; 
+		std::string code;
 		double start, finish;
 	public:
 		Job() {
 			code = "";
-			start = finish = 0;
+			start = finish = 0.0;
 		}
 		Job(std::string code, double start, double finish) {
 			this->code = code;
@@ -33,13 +33,13 @@ class Job {
 		bool operator<(const Job& other) {
 			return this->finish < other.finish;
 		}
-		double getStart() {
+		double getStart() const {
 			return this->start;
 		}
-		double getFinish() {
+		double getFinish() const {
 			return this->finish;
 		}
-		std::string getMa() {
+		std::string getCode() const {
 			return this->code;
 		}
 };
@@ -49,22 +49,33 @@ double caculate(Job* jobs, int n) {
 	}
 	return caculate(jobs, n - 1) + jobs[n - 1].timeWork();
 }
-void combination(std::map<int, std::string> mp, int n, int r, int index, std::map<int, std::string> data, int i){
-	if (index == r){
-		for (int j = 0; j < r; j++){
-			std::cout << data[j] << ' ';
-		}
-		std::cout << "\n";
-		return;
+void next_config(int x[], int k, int i) {
+	x[i]++;
+	i++;
+	while (i <= k) {
+		x[i] = x[i - 1] + 1;
+		i++;
 	}
-	if (i >= n)	return;
-	data[index] = mp[i];
-	combination(mp, n, r, index + 1, data, i + 1);
-	combination(mp, n, r, index, data, i + 1);
 }
-void print(std::map<int, std::string> mp, int n, int r) {
-	std::map<int, std::string> data;
-	combination(mp, n, r, 0, data, 0);
+void view_config(Job* jobs, int x[], int k) {
+	for (int i = 1; i <= k; ++i) {
+		std::cout << jobs[x[i] - 1].getCode() << ' ';
+	}
+	std::cout << std::endl;
+}
+void listing_configs(Job* jobs, int k, int n) {
+	int i, x[k + 1] = {0};
+	for (int i = 1; i <= k; i++) {
+		x[i] = i;
+	}
+	do {
+		view_config(jobs, x, k);
+		i = k;
+		while (i > 0 && x[i] == n - k + i) i--;
+		if (i > 0) {
+			next_config(x, k, i);
+		}
+	} while (i > 0);
 }
 int main() {
 	int n = 7;
@@ -86,14 +97,14 @@ int main() {
 	std::cout << "Tong thoi gian thuc hien tat ca cac cong viec: " << caculate(jobs, n) << '\n';
 	std::cout << "----------------------------------------------------\n";
 	// Cau 2.1
-	std::sort(jobs, jobs + n); 
-	std::vector<int> ans; 
+	std::sort(jobs, jobs + n);
+	std::vector<int> ans;
 	for (int i = 0; i < n; ++i) {
 		Job job = jobs[i];
 		bool check = true;
 		for (int j = 0; j < (int) ans.size(); ++j) {
 			if (job.getFinish() >= jobs[ans[j]].getStart()
-			&& job.getStart() <= jobs[ans[j]].getFinish()) {
+			        && job.getStart() <= jobs[ans[j]].getFinish()) {
 				check = false;
 				break;
 			}
@@ -109,15 +120,13 @@ int main() {
 	}
 	std::cout << "----------------------------------------------------\n";
 	// Cau 2.2
-	std::vector<std::string> s;
-	for (int i = 0; i < n; ++i) {
-		s.push_back(jobs[i].getMa());
-	}
 	n = 7;
 	int r = 5;
-	std::map<int, std::string> mp;
-	for (int i = 0; i < n; ++i) mp[i] = s[i];
-	print(mp, n, r);
+	std::sort(jobs, jobs + n, 
+	[] (const Job &a, const Job &b) {
+		return a.getCode() < b.getCode();	
+	});
+	listing_configs(jobs, r, n);
 	return 0;
 }
 

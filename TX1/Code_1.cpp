@@ -1,7 +1,6 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <map>
 class Job {
 	private:
 		std::string code;
@@ -71,7 +70,9 @@ void listing_configs(Job* jobs, int k, int n) {
 	do {
 		view_config(jobs, x, k);
 		i = k;
-		while (i > 0 && x[i] == n - k + i) i--;
+		while (i > 0 && x[i] == n - k + i) {
+			i--;
+		}
 		if (i > 0) {
 			next_config(x, k, i);
 		}
@@ -122,9 +123,9 @@ int main() {
 	// Cau 2.2
 	n = 7;
 	int r = 5;
-	std::sort(jobs, jobs + n, 
+	std::sort(jobs, jobs + n,
 	[] (const Job &a, const Job &b) {
-		return a.getCode() < b.getCode();	
+		return a.getCode() < b.getCode();
 	});
 	listing_configs(jobs, r, n);
 	return 0;
